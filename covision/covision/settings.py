@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env() 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,7 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definition d
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'kangtalk',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +79,16 @@ WSGI_APPLICATION = 'covision.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # MySQL 엔진
+        'NAME': os.getenv('DB_NAME'),  # 사용할 데이터베이스 이름
+        'USER': os.getenv('DB_USER'),  # 데이터베이스 유저 이름
+        'PASSWORD': os.getenv('DB_PASSWORD'),  # 데이터베이스 유저 비밀번호
+        'HOST': os.getenv('DB_HOST'), # 데이터베이스 서버 주소
+        'PORT': '3306',  # 데이터베이스 서버 포트, MySQL의 기본 포트는 3306입니다.
     }
 }
 
