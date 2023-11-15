@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+  namespace: crkang
+  labels:
+    app: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+        - name: django
+          image: <your-django-image> # 여기에 도커 이미지 경로를 넣으세요 (예: username/my-django-app)
+          ports:
+            - containerPort: 8000 # Django 앱이 사용하는 포트
